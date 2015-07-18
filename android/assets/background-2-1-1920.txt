@@ -1,0 +1,18 @@
+background-2-1-1920.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cloud
+  rotate: false
+  xy: 7, 2
+  size: 376, 137
+  orig: 376, 137
+  offset: 0, 0
+  index: -1
+sky-bgnd
+  rotate: false
+  xy: 2, 2
+  size: 1, 1583
+  orig: 1, 1583
+  offset: 0, 0
+  index: -1
