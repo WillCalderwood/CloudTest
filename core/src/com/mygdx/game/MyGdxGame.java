@@ -23,20 +23,34 @@ public class MyGdxGame extends ApplicationAdapter {
 
         atlas = new TextureAtlas("background-2-1-1920.txt");
         cloud = atlas.findRegion("cloud");
+
+
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        // Make sure alpha is 1
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glColorMask(true, true, true, true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(sky, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        // Don't overwrite the alpha value any more
+        Gdx.gl.glColorMask(true, true, true, false);
+
+        batch.begin();
+
+        // Draw cloud with premultiplied alpha
         batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
         batch.draw(cloudPreMultiplied, 20, Gdx.graphics.getHeight() - cloudPreMultiplied.getRegionHeight() - 20);
 
+        // Draw cloud without premultiplied alpha
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         batch.draw(cloud, Gdx.graphics.getWidth() - cloud.getRegionWidth() - 20, Gdx.graphics.getHeight() - cloud.getRegionHeight() - 20);
         batch.end();
+
+        // Double check alpha is still 1
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glColorMask(false, false, false, true);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 }
